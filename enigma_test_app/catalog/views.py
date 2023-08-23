@@ -12,6 +12,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+
 class FilialViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
