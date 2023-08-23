@@ -38,13 +38,13 @@
 -------------------------------------------------------
 
 Реализуйте роуты и предоставления для них, желательно с помощью rest_framework.decorators.action в одном классе.
-catalolg/?filial=<id> список объектов Product + стоимость
-catalolg/<product_id>/?filial=<id> данные объекта Product + стоимость
-catalolg/<product_id>/price/?filial=<id> данные объекта FilialPrice
-catalolg/<product_id>/characterictic/  все связанные с этим товаром характеристики
+catalog/?filial=<id> список объектов Product + стоимость
+catalog/<product_id>/?filial=<id> данные объекта Product + стоимость
+catalog/<product_id>/price/?filial=<id> данные объекта FilialPrice
+catalog/<product_id>/characterictic/  все связанные с этим товаром характеристики
 
 Все модели должны иметь сериализаторы.
 Сериализаторы должны поддерживать создание и обновление объектов.
 
-Предоставление может получать параметры - id филиала и характеристики catalolg/?filial=<id>&characteristic=<id>
+Предоставление может получать параметры - id филиала и характеристики catalog/?filial=<id>&characteristic=<id>
 Возвращать - товары с стоимостью в этом филиале, фильтровать список по характеристике
