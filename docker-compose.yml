@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
   web:
-    build: enigma_test_app
+    build:
+      context: ./enigma_test_app
     command: gunicorn apps.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./:/usr/src/app/
@@ -17,14 +18,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - enigma_test_app/.env
+      - .env.db
+    ports:
+      - 5432:5432
   nginx:
     build: ./nginx
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
-      - "1337:80"
+      - 1337:80
     depends_on:
       - web
 
