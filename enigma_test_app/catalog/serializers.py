@@ -1,4 +1,4 @@
-from models import Filial, Product, FilialPrice, Characteristic
+from .models import Filial, Product, FilialPrice, Characteristic
 from rest_framework import serializers
 
 

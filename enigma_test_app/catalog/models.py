@@ -12,7 +12,7 @@ class TimestampMixin(models.Model):
 class Product(TimestampMixin):
     id = models.UUIDField(primary_key=True, db_index=True)
     name = models.CharField(max_length=255)
-    characteristic = models.ManyToManyField("Characteristic")
+    characteristic = models.ManyToManyField("Characteristic", null=True)
 
 
 class Filial(TimestampMixin):
@@ -23,12 +23,12 @@ class Filial(TimestampMixin):
 
 class Characteristic(TimestampMixin):
     id = models.UUIDField(primary_key=True, db_index=True)
-    self = models.ForeignKey("Characteristic", on_delete=models.DO_NOTHING)
+    self = models.ForeignKey("Characteristic", on_delete=models.DO_NOTHING, null=True)
     name = models.CharField(max_length=255)
 
 
 class FilialPrice(TimestampMixin):
     id = models.UUIDField(primary_key=True, db_index=True)
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    filial = models.ForeignKey(Filial, on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, null=True)
+    filial = models.ForeignKey(Filial, on_delete=models.DO_NOTHING, null=True)
     price = models.IntegerField()

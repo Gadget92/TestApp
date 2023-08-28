@@ -12,21 +12,29 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+
+ENV_FILE = env.str("ENV_FILE", default=".env")
+
+if ENV_FILE and os.path.exists(ENV_FILE):
+    print(f"Env file: {ENV_FILE}")
+    env.read_env(env_file=ENV_FILE)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env.str("SECRET_KEY", default="secret")
 
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = env.bool("DEBUG", default=True)
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = env.str("DJANGO_ALLOWED_HOSTS", default="127.0.0.1").split(" ")
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:1337", "http://0.0.0.0:1337", "http://0.0.0.0:8080"]
 
@@ -42,6 +50,7 @@ INSTALLED_APPS = [
 
     "accounts",
     "catalog",
+    'rest_framework'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -82,12 +91,12 @@ WSGI_APPLICATION = "apps.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": env.str("SQL_ENGINE", default="django.db.backends.sqlite3"),
+        "NAME": env.str("SQL_DATABASE", default=f"{BASE_DIR} / db.sqlite3"),
+        "USER": env.str("SQL_USER", "user"),
+        "PASSWORD": env.str("SQL_PASSWORD", "password"),
+        "HOST": env.str("SQL_HOST", "localhost"),
+        "PORT": env.str("SQL_PORT", "5432"),
     }
 }
 
