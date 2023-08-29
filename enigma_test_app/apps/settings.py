@@ -50,7 +50,8 @@ INSTALLED_APPS = [
 
     "accounts",
     "catalog",
-    'rest_framework'
+    'rest_framework',
+    'django_filters',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -85,6 +86,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "apps.wsgi.application"
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
